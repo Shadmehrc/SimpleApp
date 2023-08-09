@@ -18,18 +18,18 @@ namespace LogMiddleWare.Service
             LogResponse(context);
         }
 
-        private async Task LogRequest(HttpContext context)
+        private async void LogRequest(HttpContext context)
         {
             if (!context.Request.Body.CanSeek)
                 context.Request.EnableBuffering();
             var deserializedRequest = await HttpContextBodyDeserializer(context.Request.Body);
-            _logger.LogInformation($"Request Received From Ip:{context.Connection.RemoteIpAddress} With Request Body: {deserializedRequest}");
+            _logger.LogInformation($"MiddleWare Log => Request Received From Ip:{context.Connection.RemoteIpAddress} With Request Body: {deserializedRequest}");
         }
 
         private async void LogResponse(HttpContext context)
         {
 
-            _logger.LogInformation($"Response Status Code: {context.Response.StatusCode}");
+            _logger.LogInformation($"MiddleWare Log => Response Status Code: {context.Response.StatusCode}");
         }
 
         public async Task<string> HttpContextBodyDeserializer(Stream body)

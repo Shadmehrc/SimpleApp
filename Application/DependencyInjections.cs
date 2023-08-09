@@ -1,4 +1,5 @@
-﻿using Application.FacadeServices;
+﻿using Application.Decorator;
+using Application.FacadeServices;
 using Application.IFacade;
 using Application.Interfaces;
 using Application.Services;
@@ -13,6 +14,7 @@ namespace Application
             services.AddSingleton<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IOrderFacade, OrderFacade>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<OrderDecorator, ConcreateOrderDecorator>();
             return services;
         }
     }

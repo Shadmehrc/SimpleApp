@@ -1,4 +1,5 @@
-﻿using Application.IFacade;
+﻿using Application.Decorator;
+using Application.IFacade;
 using Domain.Models;
 using Domain.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +15,13 @@ namespace EndPoint.Controllers
     {
         private readonly ILogger<BaseController> _logger;
         private readonly IOrderFacade _orderFacade;
+        private readonly OrderDecorator _orderDecorator;
 
-        public BaseController(ILogger<BaseController> logger, IOrderFacade orderFacade)
+        public BaseController(ILogger<BaseController> logger, IOrderFacade orderFacade, OrderDecorator orderDecorator)
         {
             _logger = logger;
             _orderFacade = orderFacade;
+            _orderDecorator = orderDecorator;
         }
 
         [HttpGet]
@@ -39,7 +42,7 @@ namespace EndPoint.Controllers
         [Route("AddOrder")]
         public async Task<bool> AddOrder(ProductModel productModel)
         {
-            var result = await _orderFacade.AddOrder(productModel);
+            var result= await _orderDecorator.AddOrder(productModel);
             return result;
         }
     }
